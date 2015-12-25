@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>It is New Years?</title>
+    </head>
+    <body class="no">
+        <div class="app">
+            <h1 class="header">No! It's not New Years</h1><br/>
+            <p class="sub">It is New Years day in <span class="countdown">...</span></p>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/countdown.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+
+            function getCountDown() {
+                var cd = new Date();
+                var nextYear = cd.getFullYear()+1;
+                var count = new Date('1/1/' + nextYear);
+                var cd = countdown(count, null, null);
+                var cdDays = countdown(count, null, countdown.DAYS);
+                if(cdDays.days > 0) {
+                    return cd;
+                } else {
+                    return "now";
+                }
+            }
+
+            setInterval(function() {
+                var text = getCountDown();
+
+                if(text == "now") {
+                    $('body').removeClass('no').addClass('yes');
+                    $('h1.header').html('<strong>Yes!</strong><br/> Happy New Year!');
+                    $('p.sub').text('Have an awesome new year, stop looking at your phone and PARTYYY!');
+                } else {
+                    $('span.countdown').text(text);
+                }
+            }, 1000);
+        </script>
+    </body>
+</html>
